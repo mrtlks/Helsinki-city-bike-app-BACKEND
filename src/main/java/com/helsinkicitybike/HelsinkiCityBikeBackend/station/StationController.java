@@ -14,12 +14,12 @@ public class StationController {
 
 	@Autowired
 
-	private StationRepository stationrepo;
+	private StationRepository stationRepository;
 
 // 1.  ----------LISTAA KAIKKI ASEMAT  REST -------------------------------------------	
 	@GetMapping(path = "/api/stations")
 	public @ResponseBody Iterable<Station> getAllStations() {
-		return stationrepo.findAll();
+		return stationRepository.findAll();
 	}
 
 }
