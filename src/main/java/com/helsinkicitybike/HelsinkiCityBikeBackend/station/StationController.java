@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @CrossOrigin
-//korjaa ongelman access-to-fetch-at-from-origin--has-been-blocked-by-cors
+//tämä korjaa react sovelluksessa näkyvän virheilmoituksen 
+//access-to-fetch-at-from-origin--has-been-blocked-by-cors
 
 @Controller
 public class StationController {

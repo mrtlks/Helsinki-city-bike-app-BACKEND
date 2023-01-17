@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@CrossOrigin //tämä korjaa react sovelluksessa näkyvän virheilmoituksen 
+@CrossOrigin 
+//tämä korjaa react sovelluksessa näkyvän virheilmoituksen 
 //access-to-fetch-at-from-origin--has-been-blocked-by-cors
 
 @Controller	

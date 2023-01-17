@@ -1,9 +1,12 @@
 package com.helsinkicitybike.HelsinkiCityBikeBackend.station;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+
 
 @Entity
 public class Station {
@@ -16,12 +19,17 @@ public class Station {
 	private String station_city;
 	private String x;
 	private String y;
+	
+
 
 	public Station() {
 		super();
 		this.station_name = null;
 		this.station_address = null;
 		this.station_city = null;
+		this.x = null;
+		this.y = null;
+	
 	}
 
 	public Station(String station_name) {
@@ -29,13 +37,17 @@ public class Station {
 		this.station_name = station_name;
 	}
 
-	public Station(String station_name, String station_address, String station_city) {
+	public Station(String station_name, String station_address, String station_city, String x, String y ) {
 		super();
 		this.station_name = station_name;
 		this.station_address = station_address;
 		this.station_city = station_city;
+		this.x = x;
+		this.y =y;
 
 	}
+	
+			
 
 	public void setStation_id(int station_id) {
 		this.station_id = station_id;
@@ -84,5 +96,6 @@ public class Station {
 	public void setY(String y) {
 		this.y = y;
 	}
+
 
 }
