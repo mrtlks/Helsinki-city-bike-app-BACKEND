@@ -26,14 +26,9 @@ table, th, td {
 }
 
 h2 {
-	font-family: Segoe UI;
+	font-family: Arial;
 	padding-top: 25px;
 	padding-bottom: 25px;
-}
-
-h5 {
-	font-family: Segoe UI;
-	padding-top: 25px;
 }
 
 container {
@@ -59,16 +54,6 @@ table {
 	display: flex;
 	align-items: center;
 	height: 250px;
-	background-image:
-		url("https://source.unsplash.com/random/?bicycle");
-	background-size: cover;
-	background-position: center;
-}
-
-.jumbotron2 {
-	display: flex;
-	align-items: center;
-	height: 150px;
 	background-image:
 		url("https://source.unsplash.com/random/?bicycle");
 	background-size: cover;
@@ -105,7 +90,7 @@ table {
 
 			<div class="col-md-5">
 				<div class="card border-dark mb-3"
-					style="width: 500px; height: 750px">
+					style="width: 500px; height: 670px">
 					<h5 class="card-header">Create a new station:</h5>
 					<div class="card-body">
 
@@ -141,9 +126,7 @@ table {
 								<input class="form-control" type="text" id="ycoordinatey"
 									placeholder="Y coordinate" th:field="${station.y}" required />
 								<br>								
-									<input class="form-control" type="text" id="removable"
-									placeholder="removable put false or true" th:field="${station.isremovable}" required />
-								<br>	
+												
 							</div>
 							<button class="btn btn-primary" type="submit">Create</button>
 
@@ -172,8 +155,10 @@ table {
 						<th>Station name</th>
 						<th>Station address</th>
 						<th>City</th>
-						<th>removable</th>
-						<th>delete</th>
+						<th>Operator</th>
+						<th>Capacity</th>
+						<th>Removable</th>
+						<th>Delete</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -190,6 +175,8 @@ table {
 						<td th:text="${station.station_name}"></td>
 						<td th:text="${station.station_address}"></td>
 						<td th:text="${station.station_city}"></td>
+							<td th:text="${station.operaattor}"></td>
+								<td th:text="${station.kapasiteet}"></td>
 						<td th:text="${station.isremovable}"></td>
 							<td>
 							<!--  POISTA ASEMA  - --> <a class="btn btn-warning"

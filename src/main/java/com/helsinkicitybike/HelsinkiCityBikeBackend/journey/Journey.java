@@ -20,6 +20,7 @@ public class Journey {
 	private String returnStationName;
 	private int coveredDistance;
 	private int duration;
+	private boolean removable;
 	
 
 	public Journey() {
@@ -112,5 +113,15 @@ public class Journey {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
+
+	public boolean getRemovable() {
+		return removable;
+	}
+
+	public void setRemovable(boolean removable) {
+		this.removable = removable;
+	}
+
+
 
 }

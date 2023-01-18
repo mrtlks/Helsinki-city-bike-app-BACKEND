@@ -1,0 +1,224 @@
+
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Journey view</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/css/styles.css"
+	th:href="@{/css/styles.css}" />
+</head>
+
+
+<style>
+table, th, td {
+	border: 1px solid black;
+	font-family: Segoe UI;
+	font-size: 15px;
+}
+
+h2 {
+	font-family: Times new roman;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+
+container {
+	font-family: Segoe UI;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0 15px;
+}
+
+table {
+	counter-reset: rowNumber;
+}
+
+#tableid tr::before {
+	display: table-cell;
+	counter-increment: rowNumber;
+	content: counter(rowNumber) ".";
+}
+
+.jumbotron {
+	display: flex;
+	align-items: center;
+	height: 300px;
+	background-image:
+		url("https://source.unsplash.com/random/?bicycle");
+	background-size: cover;
+	background-position: center;
+}
+
+.btn-primary {
+	background-color: #24B5DF !important;
+}
+</style>
+
+
+<body>
+
+	<!-- ----------	<div class="container-fluid"> </div>  jos haluaa sisennyksen/reunuksen yläpalkkiin vasemmalle ja oikealle--->
+	<section class="jumbotron">
+		<div class="container">
+			<div class="row text-center">
+				<!--jos haluaa tekstiä jumbotroniin keskitetysti -->
+				<br>
+			</div>
+		</div>
+	</section>
+
+	<div class="container">
+
+		<h2>
+
+			Helsinki City Bike Journeys
+
+			</h2>
+		<br> <br>
+		<div class="row align-items-md-stretch">
+
+			<div class="col-md-5">
+				<div class="card border-dark mb-3"
+					style="width: 600px; height: 1200px">
+					<h5 class="card-header">Add a new journey:</h5>
+					<div class="card-body">
+
+						<!-- ------------------------------------------------------------------------------------------------------- -->
+
+
+   	<!-- LISÄÄ UUSI MATKA  - -->
+
+						<form th:action="@{savejourney}" action="#" method="post">
+							<div class="form-group pb-3">
+							
+							   <p><b> Departure Station Id</b></p>
+								<input class="form-control" type="number" id="departureStationId"
+									placeholder="departure Station Id" th:field="${journey.departureStationId}" required />
+								<br>
+								
+								<p><b> Departure Station Named</b></p>
+								<input class="form-control" type="text" id="departureStationName"
+									placeholder="departure Station Name" th:field="${journey.departureStationName}" required />
+								<br>				
+								
+								<p><b>  Departure Time</b> <br>
+								Enter the time in the format 0000-00-00T00:00:00:</p>
+								<input class="form-control" type="text" id="departureTime"
+									placeholder="0000-00-00T00:00:00" th:field="${journey.departureTime}" required />																	
+								<br>
+																													
+								<p><b> Return Station Id</b></p>						
+								<input class="form-control" type="number" id="return Station Id"
+									placeholder="return Station Id" th:field="${journey.returnStationId}" required />							
+								<br>
+								
+								<p><b>Return Station Name</b></p>
+									<input class="form-control" type="text" id="returnStationName"
+									placeholder="return Station Name" th:field="${journey.returnStationName}" required />								
+								<br>
+								
+								<p><b> Return Time</b><br>
+								       Enter the time in the format 0000-00-00T00:00:00</p>
+									<input class="form-control" type="text" id="returnTime"
+									placeholder="0000-00-00T00:00:00" th:field="${journey.returnTime}" required />
+								<br>
+								
+							
+								<p><b> Covered Distance</b><br>
+								        Enter the distance in metres</p>		
+		                        <input class="form-control" type="number" id="coveredDistance"
+									placeholder="Covered Distance in metres" th:field="${journey.coveredDistance}" required />
+									
+								<br><p><b> Duration</b><br>
+								     Enter the duration of the journey in seconds</p>	
+								<input class="form-control" type="number" id="duration"
+									placeholder="Duration in seconds" th:field="${journey.duration}" required />
+								<br>	
+									<br>	
+								<p><b> Removable or not?</b><br>
+                                   Choose false (not removable) or true (removable)</p>						
+							
+								 <select th:field="*{journey.removable}">
+   								 <option th:value="'false'" th:text="false"></option>
+   								 <option th:value="'true'" th:text="true"></option>
+								</select>														
+							</div>			
+							<button class="btn btn-success" type="submit">Create</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+		<!-- ------------------------------------------------------------------------------------------------------- -->
+		<!--  BOOTSTRAP-TABLE   - -->
+		<div class="container-lista  pt-4">
+
+			<table class="table table-bordered ">
+				<thead class="thead-dark">
+
+					<tr>
+						<th></th>
+					   <th>id</th>
+					    <th>Departure time</th>
+						<th>Return time</th>
+						<th>Departure station name </th>
+						<th>Return station name</th>
+						<th>Covered distance</th>
+						<th>Duration</th>
+						<th></th>
+					</tr>
+				</thead>
+
+
+				<tbody id="tableid">
+
+
+					<!--  NÄYTÄ MATKAT LISTALLA   -->
+
+					<tr th:each="journey : ${journeys}">
+					<td th:text="${journey.id}"></td>
+					<td th:text="${journey.departureTime}"></td>
+							<td th:text="${journey.returnTime}"></td>
+							<td th:text="${journey. departureStationName}"></td>
+						<td th:text="${journey.returnStationName}"></td>
+							<td th:text="${journey.coveredDistance}"></td>
+								<td th:text="${journey.duration}"></td>
+								<td>
+							<!--  POISTA ASEMA  - --> <a class="btn btn-warning"
+					th:href="@{/delete/journey/{id}(id=${journey.id})}  ">Delete</a>
+						</td>
+						
+					</tr>
+			</table>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container-fluid">
+	
+	</div>
+</body>
+</html>

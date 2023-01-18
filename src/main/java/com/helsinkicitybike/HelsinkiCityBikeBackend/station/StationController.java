@@ -48,8 +48,10 @@ public class StationController {
 		station.setNamn(station.getStation_name());
 		station.setAdress(station.getStation_address());
 		station.setStad(station.getStation_city());
-
+		station.setIsremovable(true);
 		stationRepository.save(station);
+	
+		//tämä on linkki, ei thymeleaf
 		return "redirect:stations";
 	}
 
