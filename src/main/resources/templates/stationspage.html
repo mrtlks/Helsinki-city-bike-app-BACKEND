@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Station view</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link type="text/css" rel="stylesheet" href="/css/styles.css"
+	th:href="@{/css/styles.css}" />
+</head>
+
+
+<style>
+table, th, td {
+	border: 1px solid black;
+	font-family: Segoe UI;
+	font-size: 15px;
+}
+
+h2 {
+	font-family: Segoe UI;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+h5 {
+	font-family: Segoe UI;
+	padding-top: 25px;
+}
+
+container {
+	font-family: Segoe UI;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0 15px;
+}
+
+table {
+	counter-reset: rowNumber;
+}
+
+#tableid tr::before {
+	display: table-cell;
+	counter-increment: rowNumber;
+	content: counter(rowNumber) ".";
+}
+
+.jumbotron {
+	display: flex;
+	align-items: center;
+	height: 250px;
+	background-image:
+		url("https://source.unsplash.com/random/?bicycle");
+	background-size: cover;
+	background-position: center;
+}
+
+.jumbotron2 {
+	display: flex;
+	align-items: center;
+	height: 150px;
+	background-image:
+		url("https://source.unsplash.com/random/?bicycle");
+	background-size: cover;
+	background-position: center;
+}
+
+.btn-primary {
+	background-color: #24B5DF !important;
+}
+</style>
+
+
+<body>
+
+	<!-- ----------	<div class="container-fluid"> </div>  jos haluaa sisennyksen/reunuksen yläpalkkiin vasemmalle ja oikealle--->
+	<section class="jumbotron">
+		<div class="container">
+			<div class="row text-center">
+				<!--jos haluaa tekstiä jumbotroniin keskitetysti -->
+				<br>
+			</div>
+		</div>
+	</section>
+
+	<div class="container">
+
+		<h2>
+
+			Helsinki City Bike Stations 
+
+			</h2>
+		<br> <br>
+		<div class="row align-items-md-stretch">
+
+			<div class="col-md-5">
+				<div class="card border-dark mb-3"
+					style="width: 500px; height: 750px">
+					<h5 class="card-header">Create a new station:</h5>
+					<div class="card-body">
+
+						<!-- ------------------------------------------------------------------------------------------------------- -->
+   	<!-- LISÄÄ UUSI ASEMA  - -->
+
+						<form th:action="@{save}" action="#" method="post">
+							<div class="form-group pb-3">
+							
+								<input class="form-control" type="text" id="stationname"
+									placeholder="Station name" th:field="${station.station_name}" required />
+								<br>
+									<input class="form-control" type="number" id="stationfid"
+									placeholder="Station FID -number" th:field="${station.fid}" required />
+								<br>
+								
+								<input class="form-control" type="text" id="stationaddress"
+									placeholder="Station address" th:field="${station.station_address}" required />
+								<br>
+								<input class="form-control" type="text" id="stationcity"
+									placeholder="Station city" th:field="${station.station_city}" required />
+								<br>
+										<input class="form-control" type="text" id="capacity"
+									placeholder="Station capacity" th:field="${station.kapasiteet}" required />
+								<br>
+									<input class="form-control" type="text" id="operator"
+									placeholder="Station operator" th:field="${station.operaattor}" required />
+								<br>
+								
+		                        <input class="form-control" type="text" id="xcoordinate"
+									placeholder="X coordinate" th:field="${station.x}" required />
+								<br>
+								<input class="form-control" type="text" id="ycoordinatey"
+									placeholder="Y coordinate" th:field="${station.y}" required />
+								<br>								
+									<input class="form-control" type="text" id="removable"
+									placeholder="removable put false or true" th:field="${station.isremovable}" required />
+								<br>	
+							</div>
+							<button class="btn btn-primary" type="submit">Create</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+		<!-- ------------------------------------------------------------------------------------------------------- -->
+		<!--  BOOTSTRAP-TABLE   - -->
+		<div class="container-lista  pt-4">
+
+			<table class="table table-bordered ">
+				<thead class="thead-dark">
+
+					<tr>
+						<th></th>
+					   <th>fid</th>
+					    <th>id</th>
+						<th>Station name</th>
+						<th>Station address</th>
+						<th>City</th>
+						<th>removable</th>
+						<th>delete</th>
+						<th></th>
+					</tr>
+				</thead>
+
+
+				<tbody id="tableid">
+
+
+					<!--  NÄYTÄ ASEMAT LISTALLA   -->
+
+					<tr th:each="station : ${stations}">
+					<td th:text="${station.fid}"></td>
+					<td th:text="${station.station_id}"></td>
+						<td th:text="${station.station_name}"></td>
+						<td th:text="${station.station_address}"></td>
+						<td th:text="${station.station_city}"></td>
+						<td th:text="${station.isremovable}"></td>
+							<td>
+							<!--  POISTA ASEMA  - --> <a class="btn btn-warning"
+					th:href="@{/delete/station/{id}(id=${station.station_id})}  ">Delete</a>
+						</td>
+						
+					</tr>
+			</table>
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="container-fluid">
+	
+	</div>
+</body>
+</html>

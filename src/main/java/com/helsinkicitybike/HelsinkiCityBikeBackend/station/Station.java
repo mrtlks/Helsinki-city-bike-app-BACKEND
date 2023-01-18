@@ -14,13 +14,25 @@ public class Station {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int station_id;
+	private int fid;
 	private String station_name;
+	private String nimi;
+	private String namn;
 	private String station_address;
+	private String adress;
+	private String stad;
+	private String operaattor;
+	private String kapasiteet;
 	private String station_city;
 	private String x;
 	private String y;
+	private boolean isremovable;
 	
-
+	
+	
+	// lisää puuttuvat mitä on tietokannassa
+	// private String nimi = station_name;
+	
 
 	public Station() {
 		super();
@@ -97,5 +109,69 @@ public class Station {
 		this.y = y;
 	}
 
+
+	public int getFid() {
+		return fid;
+	}
+
+	public void setFid(int fid) {
+		this.fid = fid;
+	}
+
+	public String getNimi() {
+		return nimi;
+	}
+
+	public void setNimi(String nimi) {
+		this.nimi = nimi;
+	}
+
+	public String getNamn() {
+		return namn;
+	}
+
+	public void setNamn(String namn) {
+		this.namn = namn;
+	}
+
+	public String getStad() {
+		return stad;
+	}
+
+	public void setStad(String stad) {
+		this.stad = stad;
+	}
+
+	public String getAdress() {
+		return adress;
+	}
+
+	public void setAdress(String adress) {
+		this.adress = adress;
+	}
+
+	public String getOperaattor() {
+		return operaattor;
+	}
+
+	public void setOperaattor(String operaattor) {
+		this.operaattor = operaattor;
+	}
+
+	public String getKapasiteet() {
+		return kapasiteet;
+	}
+
+	public void setKapasiteet(String kapasiteet) {
+		this.kapasiteet = kapasiteet;
+	}
+
+	public boolean getIsremovable() {
+		return isremovable;
+	}
+
+	public void setIsremovable(boolean isremovable) {
+		this.isremovable = isremovable;
+	}
 
 }
