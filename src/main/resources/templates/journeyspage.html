@@ -171,6 +171,7 @@ table {
 						<th>Duration</th>
 						<th>Removable?</th>
 						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				
@@ -190,9 +191,11 @@ table {
 						<td th:text="${journey.duration}"></td>
 						<td th:text="${journey.removable}"></td>
 						<td>
-							<!--  POISTA MATKA  - --> <a class="btn btn-warning"
-							th:href="@{/delete/journey/{id}(id=${journey.id})}  ">Delete</a>
-						</td>
+														
+						<!--  MUOKKAA MATKAA  - --> 			
+					<a th:href="@{/edit/{id}/journey(id=${journey.id})}">Edit</a>
+	                	<!--  POISTA MATKA  - --> 				
+					<td><a class="btn btn-warning" th:href="@{/delete/journey/{id}(id=${journey.id})} ">Delete</a></td> 											
 					</tr>
 			</table>
 		</div>

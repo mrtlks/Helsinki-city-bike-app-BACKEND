@@ -1,5 +1,7 @@
 package com.helsinkicitybike.HelsinkiCityBikeBackend.station;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 @CrossOrigin
 //tämä korjaa react sovelluksessa näkyvän virheilmoituksen 
@@ -79,4 +83,15 @@ public class StationController {
 		}
 		return "redirect:/stations";
 	}
+	
+// 4. MUOKKAA ASEMAA 
+    
+    @RequestMapping(value = "/edit/{id}/station", method =RequestMethod.GET)
+      public String editStation(@PathVariable("id") int station_id, Model model){
+    	Optional<Station> station = stationRepository.findById(station_id); 	
+  		 model.addAttribute("station", station);	  
+          return "editstation";
+   }
+		
+	
 }

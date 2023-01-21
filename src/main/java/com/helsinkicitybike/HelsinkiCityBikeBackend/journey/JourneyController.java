@@ -1,5 +1,7 @@
 package com.helsinkicitybike.HelsinkiCityBikeBackend.journey;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,6 +104,17 @@ public class JourneyController {
 			}
 			return "redirect:/journeys";
 		} 
+		
+		
+// 4. MATKAN MUOKKAAMINEN ----------------------------
+	    
+	    @RequestMapping(value = "/edit/{id}/journey", method =RequestMethod.GET)
+	      public String editJourney(@PathVariable("id") int id, Model model){
+	    	Optional<Journey> journey = journeyRepository.findById(id); 	
+	  		 model.addAttribute("journey", journey);	  
+	          return "editjourney";
+	   }		
+		
 	}
 
 
