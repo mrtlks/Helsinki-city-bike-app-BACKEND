@@ -18,20 +18,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class StationController {
 
 	@Autowired
-
 	private StationRepository stationRepository;
+	
+	
 
+	
 // REST -----------------------------------------------------------------------------
+	
 
-// 1.  ----------LISTAA KAIKKI ASEMAT  -------------------------------------------	
+// 1. ASEMIEN LISTAUS -----------------	
+	
 	@GetMapping(path = "/api/stations")
 	public @ResponseBody Iterable<Station> getAllStations() {
 		return stationRepository.findAll();
 	}
 
+
+	
 // THYMELEAF --------------------------------------------------------------------------	
+	
 
 //1. ASEMIEN LISTAUS-----------------	
+	
 	@RequestMapping(value = "/stations")
 	public String stationsList(Model model) {
 		// haetaan asemat fid-järjestyksessä suurimmasta pienimpään (jotta uusimmat
@@ -41,11 +49,14 @@ public class StationController {
 		return "stationspage";
 	}
 
-// 2. ASEMAN TALLENTAMINEN		
+// 2.  ASEMAN TALLENTAMINEN -----------------
+	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveStation(Station station) {
-		station.setNimi(station.getStation_name());
-		station.setNamn(station.getStation_name());
+		
+	// tässä kaikki tiedot joita käyttäjä ei ole antanut	
+		station.setNimi(station.getName());
+		station.setNamn(station.getName());
 		station.setAdress(station.getStation_address());
 		station.setStad(station.getStation_city());
 		station.setIsremovable(true);
@@ -55,12 +66,7 @@ public class StationController {
 		return "redirect:stations";
 	}
 
-// 3. ASEMAN POISTAMINEN--------------------------------------------------------------------	
-//				@RequestMapping(value = "delete/station/{id}", method = RequestMethod.GET)
-//				public String deleteStation(@PathVariable("id") int station_id) {
-//					stationRepository.delete(stationRepository.findById(station_id).get());				
-//					return "redirect:/stations";
-//				}
+
 
 //3. ASEMAN POISTAMINEN Jos asema on "removable"--------------------------------------------------------------------	
 	@RequestMapping(value = "delete/station/{id}", method = RequestMethod.GET)

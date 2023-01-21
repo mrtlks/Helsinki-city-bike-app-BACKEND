@@ -15,7 +15,7 @@ public class Station {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int station_id;
 	private int fid;
-	private String station_name;
+	private String name;
 	private String nimi;
 	private String namn;
 	private String station_address;
@@ -31,12 +31,12 @@ public class Station {
 	
 	
 	// lisää puuttuvat mitä on tietokannassa
-	// private String nimi = station_name;
+	// private String nimi = name;
 	
 
 	public Station() {
 		super();
-		this.station_name = null;
+		this.name = null;
 		this.station_address = null;
 		this.station_city = null;
 		this.x = null;
@@ -44,14 +44,14 @@ public class Station {
 	
 	}
 
-	public Station(String station_name) {
+	public Station(String name) {
 		super();
-		this.station_name = station_name;
+		this.name = name;
 	}
 
-	public Station(String station_name, String station_address, String station_city, String x, String y ) {
+	public Station(String name, String station_address, String station_city, String x, String y ) {
 		super();
-		this.station_name = station_name;
+		this.name = name;
 		this.station_address = station_address;
 		this.station_city = station_city;
 		this.x = x;
@@ -69,12 +69,12 @@ public class Station {
 		return station_id;
 	}
 
-	public String getStation_name() {
-		return station_name;
+	public String getName() {
+		return name;
 	}
 
-	public void setStation_name(String station_name) {
-		this.station_name = station_name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getStation_address() {

@@ -26,7 +26,7 @@ table, th, td {
 }
 
 h2 {
-	font-family: Arial;
+	font-family: Times new roman;
 	padding-top: 25px;
 	padding-bottom: 25px;
 }
@@ -68,11 +68,11 @@ table {
 
 <body>
 
-	<!-- ----------	<div class="container-fluid"> </div>  jos haluaa sisennyksen/reunuksen yläpalkkiin vasemmalle ja oikealle--->
+<div th:insert="navbar :: navbar">  </div>
+
 	<section class="jumbotron">
 		<div class="container">
 			<div class="row text-center">
-				<!--jos haluaa tekstiä jumbotroniin keskitetysti -->
 				<br>
 			</div>
 		</div>
@@ -90,7 +90,7 @@ table {
 
 			<div class="col-md-5">
 				<div class="card border-dark mb-3"
-					style="width: 500px; height: 670px">
+					style="width: 500px; height: 1000px">
 					<h5 class="card-header">Create a new station:</h5>
 					<div class="card-body">
 
@@ -99,34 +99,55 @@ table {
 
 						<form th:action="@{save}" action="#" method="post">
 							<div class="form-group pb-3">
-							
+								<p>
+									<b> Station Name</b>
+								</p>
 								<input class="form-control" type="text" id="stationname"
-									placeholder="Station name" th:field="${station.station_name}" required />
+									 th:field="${station.name}" required />
 								<br>
+									<p>
+									<b> Station FID -number </b>
+								</p>
 									<input class="form-control" type="number" id="stationfid"
-									placeholder="Station FID -number" th:field="${station.fid}" required />
+									th:field="${station.fid}" required />
 								<br>
-								
+									<p>
+									<b> Station address</b>
+								</p>								
 								<input class="form-control" type="text" id="stationaddress"
-									placeholder="Station address" th:field="${station.station_address}" required />
+									th:field="${station.station_address}" required />
 								<br>
+									<p>
+									<b> Station city</b>
+								</p>
 								<input class="form-control" type="text" id="stationcity"
-									placeholder="Station city" th:field="${station.station_city}" required />
+									th:field="${station.station_city}" required />
 								<br>
-										<input class="form-control" type="text" id="capacity"
-									placeholder="Station capacity" th:field="${station.kapasiteet}" required />
+									<p>
+									<b> Station capacity</b>
+								</p>
+								<input class="form-control" type="text" id="capacity"
+								     th:field="${station.kapasiteet}" required />
 								<br>
-									<input class="form-control" type="text" id="operator"
-									placeholder="Station operator" th:field="${station.operaattor}" required />
+									<p>
+									<b> Station operator</b>
+								</p>
+								<input class="form-control" type="text" id="operator"
+									th:field="${station.operaattor}" required />
 								<br>
+									<p>
+									<b> X-Coordinate</b>
+								</p>
 								
 		                        <input class="form-control" type="text" id="xcoordinate"
-									placeholder="X coordinate" th:field="${station.x}" required />
+								    th:field="${station.x}" required />
 								<br>
+									<p>
+									<b> Y-Coordinate</b>
+								</p>
 								<input class="form-control" type="text" id="ycoordinatey"
-									placeholder="Y coordinate" th:field="${station.y}" required />
-								<br>								
-												
+								th:field="${station.y}" required />
+								<br>																			
 							</div>
 							<button class="btn btn-primary" type="submit">Create</button>
 
@@ -135,10 +156,6 @@ table {
 				</div>
 			</div>
 		</div>
-
-
-
-
 
 
 		<!-- ------------------------------------------------------------------------------------------------------- -->
@@ -163,16 +180,14 @@ table {
 					</tr>
 				</thead>
 
-
 				<tbody id="tableid">
-
 
 					<!--  NÄYTÄ ASEMAT LISTALLA   -->
 
 					<tr th:each="station : ${stations}">
 					<td th:text="${station.fid}"></td>
 					<td th:text="${station.station_id}"></td>
-						<td th:text="${station.station_name}"></td>
+						<td th:text="${station.name}"></td>
 						<td th:text="${station.station_address}"></td>
 						<td th:text="${station.station_city}"></td>
 							<td th:text="${station.operaattor}"></td>
@@ -181,19 +196,17 @@ table {
 							<td>
 							<!--  POISTA ASEMA  - --> <a class="btn btn-warning"
 					th:href="@{/delete/station/{id}(id=${station.station_id})}  ">Delete</a>
-						</td>
-						
+						</td>						
 					</tr>
 			</table>
 		</div>
 	</div>
-
 	<br>
 	<br>
 	<br>
 	<br>
 	<div class="container-fluid">
-	
 	</div>
 </body>
 </html>
+

@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.helsinkicitybike.HelsinkiCityBikeBackend.station.Station;
+import com.helsinkicitybike.HelsinkiCityBikeBackend.station.StationRepository;
+
 
 @CrossOrigin 
 //tämä korjaa react sovelluksessa näkyvän virheilmoituksen 
@@ -17,12 +20,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller	
 public class JourneyController {
-	@Autowired
 	
+	@Autowired	
 	private JourneyRepository journeyRepository;
 	
+	@Autowired
+	private StationRepository stationRepository;
 	
-//1.  ----------LISTAA KAIKKI MATKAT REST-------------------------------------------	
+
+	
+
+//  REST -------------------------------------------	
+	
+//1. MATKOJEN LISTAUS -----------------	
+	
 	@GetMapping(path="/api/journeys")
 	public @ResponseBody Iterable<Journey> getAllJourneys() {
 		// This returns a JSON or XML with the users
@@ -31,36 +42,56 @@ public class JourneyController {
 	
 	
 	
-	// THYMELEAF --------------------------------------------------------------------------	
+// THYMELEAF --------------------------------------------------------------------------	
 
-	//1. ASEMIEN LISTAUS-----------------	
+//1. MATKOJEN LISTAUS -----------------	
+	
 		@RequestMapping(value = "/journeys")
 		public String stationsList(Model model) {
 			// haetaan asemat fid-järjestyksessä suurimmasta pienimpään (jotta uusimmat
 			// näkyvät ensin)
 			model.addAttribute("journeys", journeyRepository.findByOrderByIdDesc());
+			model.addAttribute("stations", stationRepository.findAll());
 			model.addAttribute("journey", new Journey()); // "tyhjä" olio
+		 
 			return "journeyspage";
 		}
 
-	// 2. ASEMAN TALLENTAMINEN		
+	
+		
+// 2.MATKAN TALLENTAMINEN -----------------
+		
 		@RequestMapping(value = "/savejourney", method = RequestMethod.POST)
 		public String saveJourney(Journey journey) {
+		// matkaan on jo asetettuna jo DepartureStationName sekä ReturnStationName, jotka käyttäjä antanut lomakkeeseen
+	    // haetaan siis tämä "journey.departureStationName" muuttujaan "departureStationName"
+			String departureStationName = journey.getDepartureStationName();
+			String returnStationName = journey.getReturnStationName();
+		// nyt muuttujassa on pelkästään string arvo, joka on aseman nimi		
+			System.out.print("-------- Lähtöasema: " + departureStationName);
+			System.out.print("-------- Paluuasema: " + returnStationName);
+        // --> aseman nimen avulla voidaan hakea kyseisen aseman id (station_id) StationRepositorysta
+			
+			Station dstation = stationRepository.findByName(departureStationName);
+			Station rstation = stationRepository.findByName(returnStationName);
+			
+			int dstationid = dstation.getStation_id();
+			int rstationid = rstation.getStation_id();
+			//Journey journey = journeyRepository.findById(id).get();
+			journey.setDepartureStationId(dstationid);
+			journey.setReturnStationId(rstationid);
+	    //		Station station = journeyRepository.findByStationName(departureStationName).get();	
+			journey.setRemovable(true);		
 			
 			journeyRepository.save(journey);
 			
 			//tämä on linkki, ei thymeleaf
 			return "redirect:journeys";
 		}
+			
+	
 
-	// 3. ASEMAN POISTAMINEN--------------------------------------------------------------------	
-//					@RequestMapping(value = "delete/station/{id}", method = RequestMethod.GET)
-//					public String deleteStation(@PathVariable("id") int station_id) {
-//						stationRepository.delete(stationRepository.findById(station_id).get());				
-//						return "redirect:/stations";
-//					}
-
-	//3. ASEMAN POISTAMINEN Jos matka on "removable"--------------------------------------------------------------------	
+//3.  MATKAN POISTAMINEN jos matka on "removable"--------------------------------------------------------------------	
 		@RequestMapping(value = "delete/journey/{id}", method = RequestMethod.GET)
 		public String deleteJourneyifremovable(@PathVariable("id") int id) {
 			Journey journey = journeyRepository.findById(id).get();
@@ -72,3 +103,6 @@ public class JourneyController {
 			return "redirect:/journeys";
 		} 
 	}
+
+
+
