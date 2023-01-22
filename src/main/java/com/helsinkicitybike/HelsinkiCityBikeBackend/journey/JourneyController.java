@@ -108,7 +108,7 @@ public class JourneyController {
 		
 // 4. MATKAN MUOKKAAMINEN ----------------------------
 	    
-	    @RequestMapping(value = "/edit/{id}/journey", method =RequestMethod.GET)
+    @RequestMapping(value = "/edit/{id}/journey", method =RequestMethod.GET)
 	      public String editJourney(@PathVariable("id") int id, Model model){
 	    	Optional<Journey> journey = journeyRepository.findById(id); 	
 	  		 model.addAttribute("journey", journey);	  

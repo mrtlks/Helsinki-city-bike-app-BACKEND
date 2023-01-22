@@ -84,7 +84,7 @@ public class StationController {
 		return "redirect:/stations";
 	}
 	
-// 4. MUOKKAA ASEMAA 
+// 4. ASEMAN MUOKKAAMINEN
     
     @RequestMapping(value = "/edit/{id}/station", method =RequestMethod.GET)
       public String editStation(@PathVariable("id") int station_id, Model model){
