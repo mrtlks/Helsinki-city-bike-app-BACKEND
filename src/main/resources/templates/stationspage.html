@@ -174,7 +174,8 @@ table {
 						<th>City</th>
 						<th>Operator</th>
 						<th>Capacity</th>
-						<th>Removable</th>
+						<th>Removable?</th>
+						<th>Editable?</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -193,6 +194,7 @@ table {
 							<td th:text="${station.operaattor}"></td>
 								<td th:text="${station.kapasiteet}"></td>
 						<td th:text="${station.isremovable}"></td>
+							<td th:text="${station.editable}"></td>
 							<td>
 												
 						<!--  MUOKKAA ASEMAA  - --> 			

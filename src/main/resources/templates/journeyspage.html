@@ -165,6 +165,7 @@ table {
 						<th>Covered distance</th>
 						<th>Duration</th>
 						<th>Removable?</th>
+						<th>Editable?</th>
 						<th></th>
 						<th></th>
 					</tr>
@@ -185,6 +186,7 @@ table {
 						<td th:text="${journey.coveredDistance}"></td>
 						<td th:text="${journey.duration}"></td>
 						<td th:text="${journey.removable}"></td>
+								<td th:text="${journey.editable}"></td>
 						<td>
 							<!--  MUOKKAA MATKAA  - --> <a
 							th:href="@{/edit/{id}/journey(id=${journey.id})}">Edit</a> <!--  POISTA MATKA  - -->

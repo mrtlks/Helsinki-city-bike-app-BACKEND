@@ -54,8 +54,7 @@ table {
 	display: flex;
 	align-items: center;
 	height: 250px;
-	background-image:
-		url("https://source.unsplash.com/random/?bicycle");
+	background-image: url("https://source.unsplash.com/random/?bicycle");
 	background-size: cover;
 	background-position: center;
 }
@@ -68,7 +67,7 @@ table {
 
 <body>
 
-<div th:insert="navbar :: navbar">  </div>
+	<div th:insert="navbar :: navbar"></div>
 
 	<section class="jumbotron">
 		<div class="container">
@@ -80,12 +79,7 @@ table {
 
 	<div class="container">
 
-		<h2>
-	
-
-			Helsinki City Bike Stations - Edit Station
-
-			</h2>
+		<h2>Helsinki City Bike Stations - Edit Station</h2>
 		<br> <br>
 		<div class="row align-items-md-stretch">
 
@@ -96,75 +90,66 @@ table {
 					<div class="card-body">
 
 						<!-- ------------------------------------------------------------------------------------------------------- -->
-   	<!-- MUOKKAA ASEMAA  - -->
+						<!-- MUOKKAA ASEMAA  - -->
 
-						<form   th:action="@{/save}" action="#" method="post">
+						<form th:action="@{/save}" action="#" method="post">
 							<div class="form-group pb-3">
+
+								<!-- aseman id piilotettu-->
+								<input type="hidden" th:field="*{station.station_id}"
+									id="stationid">
 								<p>
 									<b> Station Name</b>
-								</p> 	
-									
-								<input class="form-control" type="text" id="stationname"
-									 th:field="${station.name}" required />
-								<br>
-									<p>
-			<!-- 				<b> Station ID  </b>
 								</p>
-									<input class="form-control" type="number" id="stationid"
-									th:field="${station.station_id}" required />
-								<br>  -->		
-								<input type="hidden" th:field="*{station.station_id}" id="stationid">
-									<p>
+
+								<input class="form-control" type="text" id="stationname"
+									th:field="${station.name}" required /> <br>
+								<p>
+								<p>
 									<b> Station FID -number </b>
 								</p>
-									<input class="form-control" type="number" id="stationfid"
-									th:field="${station.fid}" required />
-								<br>
-									<p>
+								<input class="form-control" type="number" id="stationfid"
+									th:field="${station.fid}" required /> <br>
+								<p>
 									<b> Station address</b>
-								</p>								
+								</p>
 								<input class="form-control" type="text" id="stationaddress"
-									th:field="${station.station_address}" required />
-								<br>
-									<p>
+									th:field="${station.station_address}" required /> <br>
+								<p>
 									<b> Station city</b>
 								</p>
 								<input class="form-control" type="text" id="stationcity"
-									th:field="${station.station_city}" required />
-								<br>
-									<p>
+									th:field="${station.station_city}" required /> <br>
+								<p>
 									<b> Station capacity</b>
 								</p>
 								<input class="form-control" type="text" id="capacity"
-								     th:field="${station.kapasiteet}" required />
-								<br>
-									<p>
+									th:field="${station.kapasiteet}" required /> <br>
+								<p>
 									<b> Station operator</b>
 								</p>
 								<input class="form-control" type="text" id="operator"
-									th:field="${station.operaattor}" required />
-								<br>
-									<p>
+									th:field="${station.operaattor}" required /> <br>
+								<p>
 									<b> X-Coordinate</b>
 								</p>
-								
-		                        <input class="form-control" type="text" id="xcoordinate"
-								    th:field="${station.x}" required />
-								<br>
-									<p>
+
+								<input class="form-control" type="text" id="xcoordinate"
+									th:field="${station.x}" required /> <br>
+								<p>
 									<b> Y-Coordinate</b>
 								</p>
 								<input class="form-control" type="text" id="ycoordinatey"
-								th:field="${station.y}" required />
-								<br>																			
+									th:field="${station.y}" required /> <br>
 							</div>
-							<button class="btn btn-primary" type="submit">Save changes</button>
+							<button class="btn btn-primary" type="submit">Save
+								changes</button>
 
 						</form>
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
 	</div>
 </body>
 </html>

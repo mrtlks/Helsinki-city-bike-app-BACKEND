@@ -85,7 +85,7 @@ table {
 
 			<div class="col-md-5">
 				<div class="card border-dark mb-3"
-					style="width: 500px; height: 890px">
+					style="width: 500px; height: 870px">
 					<h5 class="card-header">Edit Journey:</h5>
 					<div class="card-body">
 
@@ -96,17 +96,26 @@ table {
 
 						<form th:action="@{/savejourney}" action="#" method="post">
 							<div class="form-group pb-3">
+
+								<!-- matkan id piilotettu-->
+								<input type="hidden" th:field="*{journey.id}" id="journeyid">
 								<p>
 									<b> Departure Station Name</b>
 								</p>
-								<input class="form-control" type="text" id="departureStation"
-									placeholder="0000-00-00T00:00:00"
-									th:field="${journey.departureStationName}" required /> <br>
+								<select th:field="*{journey.departureStationName}">
+									<option th:each="station : ${stations}"
+										th:value="${station.name}" th:text="${station.name}">
+									</option>
+								</select> <br> <br>
 								<p>
 									<b> Return Station Name</b>
 								</p>
-								<input class="form-control" type="text" id="returnStation"
-									th:field="${journey.returnStationName}" required /> <br>
+
+								<select th:field="*{journey.returnStationName}">
+									<option th:each="station : ${stations}"
+										th:value="${station.name}" th:text="${station.name}">
+									</option>
+								</select> <br> <br>
 								<p>
 									<b> Departure Time</b><br> Enter the time in the format
 									0000-00-00T00:00:00:
@@ -133,8 +142,7 @@ table {
 								</p>
 								<input class="form-control" type="number" id="duration"
 									placeholder="Duration in seconds"
-									th:field="${journey.duration}" required /> 
-								<br>
+									th:field="${journey.duration}" required /> <br>
 							</div>
 							<button class="btn btn-primary" type="submit">Save
 								changes</button>

@@ -27,7 +27,7 @@ public class Station {
 	private String x;
 	private String y;
 	private boolean isremovable;
-	
+	private boolean editable;
 	
 	
 	// lisää puuttuvat mitä on tietokannassa
@@ -172,6 +172,14 @@ public class Station {
 
 	public void setIsremovable(boolean isremovable) {
 		this.isremovable = isremovable;
+	}
+
+	public boolean getEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 
 }

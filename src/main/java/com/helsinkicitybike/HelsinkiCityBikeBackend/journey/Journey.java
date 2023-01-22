@@ -21,6 +21,8 @@ public class Journey {
 	private int coveredDistance;
 	private int duration;
 	private boolean removable;
+	private boolean editable;
+	
 	
 
 	public Journey() {
@@ -120,6 +122,14 @@ public class Journey {
 
 	public void setRemovable(boolean removable) {
 		this.removable = removable;
+	}
+
+	public boolean getEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 
 
