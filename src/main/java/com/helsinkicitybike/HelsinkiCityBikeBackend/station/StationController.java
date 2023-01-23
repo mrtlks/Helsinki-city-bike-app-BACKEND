@@ -19,6 +19,15 @@ public class StationController {
 
 	@Autowired
 	private StationRepository stationRepository;
+	
+//mock test (TestingWebApplivationTest)
+	
+	@RequestMapping("/test")
+	public @ResponseBody String greeting() {
+		return "This is a test.";
+	}
+	
+
 
 // REST -----------------------------------------------------------------------------
 
@@ -53,7 +62,7 @@ public class StationController {
 		station.setAdress(station.getStation_address());
 		station.setStad(station.getStation_city());
 		station.setIsremovable(true);
-		station.setEditable(false);
+		station.setEditable(true);
 		stationRepository.save(station);
 
 		// tämä on linkki, ei thymeleaf

@@ -9,5 +9,4 @@ class HelsinkiCityBikeBackendApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
