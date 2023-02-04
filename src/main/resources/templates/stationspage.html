@@ -10,7 +10,12 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" >
-
+<script
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script
+	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 
 
@@ -82,8 +87,8 @@ table {
 
 			<div class="col-md-5">
 				<div class="card border-dark mb-3"
-					style="width: 500px; height: 1000px">
-					<h5 class="card-header">Create a new station:</h5>
+					style="width: 500px; height: 820px">
+					<h4 class="card-header">Create a new station:</h4>
 					<div class="card-body">
 
 						<!-- ------------------------------------------------------------------------------------------------------- -->
@@ -107,13 +112,13 @@ table {
 									<b> Station address</b>
 								</p>								
 								<input class="form-control" type="text" id="stationaddress"
-									th:field="${station.station_address}" required />
+									th:field="${station.address}" required />
 								<br>
 									<p>
 									<b> Station city</b>
 								</p>
 								<input class="form-control" type="text" id="stationcity"
-									th:field="${station.station_city}" required />
+									th:field="${station.city}" required />
 								<br>
 									<p>
 									<b> Station capacity</b>
@@ -161,11 +166,14 @@ table {
 						<th></th>
 					   <th>fid</th>
 					    <th>id</th>
-						<th>Station name</th>
+						<th><a th:href="@{/stations/sortedby/stationname}">
+								Station name</a></th>
 						<th>Station address</th>
 						<th>City</th>
 						<th>Operator</th>
 						<th>Capacity</th>
+						<th>X-Coordinate</th>
+						<th>Y-Coordinate</th>
 						<th>Removable?</th>
 						<th>Editable?</th>
 						<th></th>
@@ -177,25 +185,41 @@ table {
 
 					<!--  NÄYTÄ ASEMAT LISTALLA   -->
 
-					<tr th:each="station : ${stations}">
+						<tr th:each="station : ${page.content}">
 					<td th:text="${station.fid}"></td>
-					<td th:text="${station.station_id}"></td>
+					<td th:text="${station.id}"></td>
 						<td th:text="${station.name}"></td>
-						<td th:text="${station.station_address}"></td>
-						<td th:text="${station.station_city}"></td>
+						<td th:text="${station.address}"></td>
+						<td th:text="${station.city}"></td>
 							<td th:text="${station.operaattor}"></td>
 								<td th:text="${station.kapasiteet}"></td>
+								<td th:text="${station.x}"></td>
+								<td th:text="${station.y}"></td>
 						<td th:text="${station.isremovable}"></td>
 							<td th:text="${station.editable}"></td>
 							<td>
 												
 						<!--  MUOKKAA ASEMAA  - --> 			
-					<a th:href="@{/edit/{id}/station(id=${station.station_id})}">Edit</a>
+					<a th:href="@{/edit/{id}/station(id=${station.id})}">Edit</a>
 	                	<!--  POISTA ASEMA  - --> 				
-					<td><a class="btn btn-warning" th:href="@{/delete/station/{id}(id=${station.station_id})}  ">Delete</a></td> 											
+					<td><a class="btn btn-warning" th:href="@{/delete/station/{id}(id=${station.id})}  ">Delete</a></td> 											
 									
 					</tr>
 			</table>
+			<div class="pagination-div">
+				<span th:if="${page.hasPrevious()}"> <a
+					th:href="@{/journeys(page=${page.number-1},size=${page.size})}">Previous</a>
+				</span>
+				<th:block th:each="i: ${#numbers.sequence(0, page.totalPages - 1)}">
+					<span th:if="${page.number == i}" class="selected">[[${i}+1]]</span>
+					<span th:unless="${page.number == i}"> <a
+						th:href="@{/journeys(page=${i},size=${page.size})}">[[${i}+1]]</a>
+					</span>
+				</th:block>
+				<span th:if="${page.hasNext()}"> <a
+					th:href="@{/journeys(page=${page.number+1},size=${page.size})}">Next</a>
+				</span>
+			</div>
 		</div>
 	</div>
 	<br>

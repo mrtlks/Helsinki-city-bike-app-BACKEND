@@ -1,6 +1,11 @@
 package com.helsinkicitybike.HelsinkiCityBikeBackend.journey;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.helsinkicitybike.HelsinkiCityBikeBackend.station.Station;
@@ -25,90 +31,93 @@ public class JourneyController {
 
 	@Autowired
 	private StationRepository stationRepository;
+	
 
+
+	
 //  REST -------------------------------------------	
 
 //1. MATKOJEN LISTAUS -----------------	
 
-	@GetMapping(path = "/api/journeys")
+	
+
+	@GetMapping(path = "/api/alljourneys")
 	public @ResponseBody Iterable<Journey> getAllJourneys() {
 		// This returns a JSON or XML with the users
 		return journeyRepository.findAll();
 	}
 
+
+	@GetMapping(path = "/api/journeys")
+	public @ResponseBody Page<Journey> journeysApiPageable(Pageable pageable) {
+		// This returns a JSON or XML with the users
+		return journeyRepository.findAll(pageable);
+	}
+	
+	
 // THYMELEAF --------------------------------------------------------------------------	
 
-//1. MATKOJEN LISTAUS -----------------	
+	
+	//1. MATKOJEN LISTAUS -----------------	
+	
+	 @GetMapping("/journeys")
+	  public String getJourneys(@PageableDefault(size = 100) Pageable pageable,
+	                             Model model) {
+	      Page<Journey> page = journeyRepository.findByOrderByIdDesc(pageable);
 
-	@RequestMapping(value = "/journeys")
-	public String stationsList(Model model) {
-		// haetaan asemat fid-järjestyksessä suurimmasta pienimpään (jotta uusimmat
-		// näkyvät ensin)
-		model.addAttribute("journeys", journeyRepository.findByOrderByIdDesc());
-		model.addAttribute("stations", stationRepository.findAll());
-		model.addAttribute("journey", new Journey()); // "tyhjä" olio
+	      model.addAttribute("page", page);
+	      model.addAttribute("stations", stationRepository.findAll());
+	      model.addAttribute("journey", new Journey()); // "tyhjä" olio
+	      return "journeyspage";
+	 }
+	
+	
 
-		return "journeyspage";
-	}
 
 // 2.MATKAN TALLENTAMINEN -----------------
-
 	@RequestMapping(value = "/savejourney", method = RequestMethod.POST)
 	public String saveJourney(Journey journey) {
-		// matkaan on jo asetettuna jo DepartureStationName sekä ReturnStationName,
-		// jotka käyttäjä antanut lomakkeeseen
-		// haetaan siis tämä "journey.departureStationName" muuttujaan
-		// "departureStationName"
+	
 		String departureStationName = journey.getDepartureStationName();
 		String returnStationName = journey.getReturnStationName();
-		// nyt muuttujassa on pelkästään string arvo, joka on aseman nimi
-		System.out.print("-------- Lähtöasema: " + departureStationName);
-		System.out.print("-------- Paluuasema: " + returnStationName);
-		// --> aseman nimen avulla voidaan hakea kyseisen aseman id (station_id)
-		// StationRepositorysta
+		
+	//	System.out.print("-------- Lähtöasema: " + departureStationName);
+	//	System.out.print("-------- Paluuasema: " + returnStationName);
+		
 
 		Station dstation = stationRepository.findByName(departureStationName);
 		Station rstation = stationRepository.findByName(returnStationName);
 
-		int dstationid = dstation.getStation_id();
-		int rstationid = rstation.getStation_id();
-		// Journey journey = journeyRepository.findById(id).get();
+		int dstationid = dstation.getId();
+		int rstationid = rstation.getId();
 		journey.setDepartureStationId(dstationid);
 		journey.setReturnStationId(rstationid);
-		// Station station =
-		// journeyRepository.findByStationName(departureStationName).get();
+		
 		journey.setRemovable(true);
 		journey.setEditable(true);
-
 		journeyRepository.save(journey);
 
-		// tämä on linkki, ei thymeleaf
+	
 		return "redirect:journeys";
 	}
 
-//3.  MATKAN POISTAMINEN jos matka on "removable"--------------------------------------------------------------------	
+//3.  MATKAN POISTAMINEN jos matka on "removable"--------alustavasti vain sovelluksesta lisätyt matkat on mahdollista poistaa------------------------------------------------------------	
 	@RequestMapping(value = "delete/journey/{id}", method = RequestMethod.GET)
 	public String deleteJourneyifremovable(@PathVariable("id") int id) {
+		System.out.print(" testi miten id näkyy  ----- "+id);
 		Journey journey = journeyRepository.findById(id).get();
 		if (journey.getRemovable()) {
 			journeyRepository.delete(journeyRepository.findById(id).get());
 		} else {
 			System.out.print("not removable");
+			return "redirect:/journeys";
 		}
 		return "redirect:/journeys";
 	}
 
-	/*
-	 * 4. MATKAN MUOKKAAMINEN ----------------------------
-	 * 
-	 * @RequestMapping(value = "/edit/{id}/journey", method =RequestMethod.GET)
-	 * public String editJourney(@PathVariable("id") int id, Model model){
-	 * Optional<Journey> journey = journeyRepository.findById(id);
-	 * model.addAttribute("journey", journey); return "editjourney"; }
-	 * 
-	 */
 
-// 4. MATKAN MUOKKAAMINEN jos matka on editable  ----------------------------
+
+// 4. MATKAN MUOKKAAMINEN jos matka on editable  --------alustavasti vain sovelluksesta lisätyt matkat on mahdollista muokata--------------------
 
 	@RequestMapping(value = "/edit/{id}/journey", method = RequestMethod.GET)
 	public String editJourneyifEditable(@PathVariable("id") int id, Model model) {
@@ -119,8 +128,11 @@ public class JourneyController {
 			model.addAttribute("stations", stationRepository.findAll());
 		} else {
 			System.out.print("not editable");
+			return "redirect:/journeys";
+			
 		}
 		return "editjourney";
 	}
 
+	
 }

@@ -1,6 +1,9 @@
 package com.helsinkicitybike.HelsinkiCityBikeBackend.station;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+
 
 @CrossOrigin
 //tämä korjaa react sovelluksessa näkyvän virheilmoituksen 
@@ -33,20 +38,27 @@ public class StationController {
 
 // 1. ASEMIEN LISTAUS -----------------	
 
-	@GetMapping(path = "/api/stations")
+	@GetMapping(path = "/api/allstations")
 	public @ResponseBody Iterable<Station> getAllStations() {
 		return stationRepository.findAll();
 	}
-
+	@GetMapping(path = "/api/stations")
+	public @ResponseBody Page<Station> journeysApiPageable(Pageable pageable) {
+		// This returns a JSON or XML with the users
+		return stationRepository.findAll(pageable);
+	}
+	
+	
 // THYMELEAF --------------------------------------------------------------------------	
 
 //1. ASEMIEN LISTAUS-----------------	
 
 	@RequestMapping(value = "/stations")
-	public String stationsList(Model model) {
-		// haetaan asemat fid-järjestyksessä suurimmasta pienimpään (jotta uusimmat
-		// näkyvät ensin)
-		model.addAttribute("stations", stationRepository.findByOrderByFidDesc());
+	public String getStations(@PageableDefault(size = 300) Pageable pageable,
+            Model model)  {
+		Page<Station> page = stationRepository.findByOrderByIdDesc(pageable);
+
+		model.addAttribute("page", page);
 		model.addAttribute("station", new Station()); // "tyhjä" olio
 		return "stationspage";
 	}
@@ -59,38 +71,31 @@ public class StationController {
 		// tässä kaikki tiedot joita käyttäjä ei ole antanut
 		station.setNimi(station.getName());
 		station.setNamn(station.getName());
-		station.setAdress(station.getStation_address());
-		station.setStad(station.getStation_city());
+		station.setAdress(station.getAddress());
+		station.setStad(station.getCity());
 		station.setIsremovable(true);
 		station.setEditable(true);
 		stationRepository.save(station);
 
-		// tämä on linkki, ei thymeleaf
+	
 		return "redirect:stations";
 	}
 
-//3. ASEMAN POISTAMINEN Jos asema on "removable"--------------------------------------------------------------------	
+//3. ASEMAN POISTAMINEN Jos asema on "removable"------------alustavasti vain sovelluksesta lisättyjä asemia voi poistaa ja muokata--------------------------------------------------------	
 	@RequestMapping(value = "delete/station/{id}", method = RequestMethod.GET)
-	public String deleteStationifremovable(@PathVariable("id") int station_id) {
-		Station station = stationRepository.findById(station_id).get();
+	public String deleteStationifremovable(@PathVariable("id") int id) {
+		Station station = stationRepository.findById(id).get();
 		if (station.getIsremovable()) {
-			stationRepository.delete(stationRepository.findById(station_id).get());
+			stationRepository.delete(stationRepository.findById(id).get());
 		} else {
 			System.out.print("not removable");
 		}
 		return "redirect:/stations";
 	}
 
-	/*
-	 * 4. ASEMAN MUOKKAAMINEN
-	 * 
-	 * @RequestMapping(value = "/edit/{id}/station", method = RequestMethod.GET)
-	 * public String editStation(@PathVariable("id") int station_id, Model model) {
-	 * Optional<Station> station = stationRepository.findById(station_id);
-	 * model.addAttribute("station", station); return "editstation"; }
-	 */
 
-// 4.ASEMAN MUOKKAAMINEN, jos asema on editable  ----------------------------
+
+// 4.ASEMAN MUOKKAAMINEN, jos asema on editable  ------------alustavasti vain sovelluksesta lisättyjä asemia voi poistaa ja muokata-----------------
 
 	@RequestMapping(value = "/edit/{id}/station", method = RequestMethod.GET)
 	public String editStationifEditable(@PathVariable("id") int id, Model model) {

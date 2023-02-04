@@ -12,33 +12,30 @@ import javax.persistence.Id;
 public class Station {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int station_id;
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private int fid;
 	private String name;
 	private String nimi;
 	private String namn;
-	private String station_address;
+	private String address;
 	private String adress;
 	private String stad;
 	private String operaattor;
 	private String kapasiteet;
-	private String station_city;
+	private String city;
 	private String x;
 	private String y;
 	private boolean isremovable;
 	private boolean editable;
 	
 	
-	// lisää puuttuvat mitä on tietokannassa
-	// private String nimi = name;
 	
-
 	public Station() {
 		super();
 		this.name = null;
-		this.station_address = null;
-		this.station_city = null;
+		this.setAddress(null);
+		this.city = null;
 		this.x = null;
 		this.y = null;
 	
@@ -49,11 +46,11 @@ public class Station {
 		this.name = name;
 	}
 
-	public Station(String name, String station_address, String station_city, String x, String y ) {
+	public Station(String name, String address, String city, String x, String y ) {
 		super();
 		this.name = name;
-		this.station_address = station_address;
-		this.station_city = station_city;
+		this.setAddress(address);
+		this.city = city;
 		this.x = x;
 		this.y =y;
 
@@ -61,12 +58,12 @@ public class Station {
 	
 			
 
-	public void setStation_id(int station_id) {
-		this.station_id = station_id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getStation_id() {
-		return station_id;
+	public int getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -77,20 +74,14 @@ public class Station {
 		this.name = name;
 	}
 
-	public String getStation_address() {
-		return station_address;
+
+
+	public String getCity() {
+		return city;
 	}
 
-	public void setStation_address(String station_address) {
-		this.station_address = station_address;
-	}
-
-	public String getStation_city() {
-		return station_city;
-	}
-
-	public void setStation_city(String station_city) {
-		this.station_city = station_city;
+	public void setcity(String city) {
+		this.city = city;
 	}
 
 	public String getX() {
@@ -180,6 +171,14 @@ public class Station {
 
 	public void setEditable(boolean editable) {
 		this.editable = editable;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }

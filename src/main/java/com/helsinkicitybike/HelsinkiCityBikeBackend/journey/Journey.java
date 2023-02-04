@@ -10,7 +10,7 @@ import com.helsinkicitybike.HelsinkiCityBikeBackend.station.Station;
 public class Journey {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String departureTime;
 	private String returnTime;
@@ -31,6 +31,7 @@ public class Journey {
 		this.returnTime = null;
 		this.departureStationName = null;
 		this.returnStationName = null;
+		
 
 	}
 
