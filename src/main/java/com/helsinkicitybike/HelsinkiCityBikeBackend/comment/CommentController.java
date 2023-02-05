@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
-@CrossOrigin(origins = "*") //tämä korjaa react sovelluksessa näkyvän virheilmoituksen 
+@CrossOrigin//tämä korjaa react sovelluksessa näkyvän virheilmoituksen 
 //access-to-fetch-at-from-origin--has-been-blocked-by-cors
 
 @Controller	
@@ -32,7 +32,7 @@ return commentRepository.findAll();
 
 
 //2. ---------------KOMMENTIN TALLENNUS --------------------------------------------------------------------	
-@CrossOrigin(origins = "*")
+@CrossOrigin
 @RequestMapping(value = "/api/comments", method = RequestMethod.POST) 
 //kun urliin tehdään post pyyntö, se aktivoi allaolevan:
 
