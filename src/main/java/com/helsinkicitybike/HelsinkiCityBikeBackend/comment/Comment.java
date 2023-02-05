@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Entity
 public class Comment {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int comment_id;
 	private String comment_text;
 	private String nickname;
