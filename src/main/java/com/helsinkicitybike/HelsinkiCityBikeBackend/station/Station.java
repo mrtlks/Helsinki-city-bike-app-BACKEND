@@ -34,7 +34,7 @@ public class Station {
 	public Station() {
 		super();
 		this.name = null;
-		this.setAddress(null);
+		this.address = null;
 		this.city = null;
 		this.x = null;
 		this.y = null;
@@ -45,7 +45,7 @@ public class Station {
 	public Station(String name, String address, String city, String x, String y ) {
 		super();
 		this.name = name;
-		this.address = (address);
+		this.address = address;
 		this.city = city;
 		this.x = x;
 		this.y =y;
