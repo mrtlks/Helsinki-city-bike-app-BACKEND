@@ -32,7 +32,7 @@ return commentRepository.findAll();
 
 
 //2. ---------------KOMMENTIN TALLENNUS --------------------------------------------------------------------	
-@CrossOrigin
+
 @RequestMapping(value = "/api/comments", method = RequestMethod.POST) 
 //kun urliin tehdään post pyyntö, se aktivoi allaolevan:
 
