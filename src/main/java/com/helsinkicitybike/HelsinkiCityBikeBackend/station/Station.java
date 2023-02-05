@@ -41,19 +41,14 @@ public class Station {
 	
 	}
 
-	public Station(String name) {
-		super();
-		this.name = name;
-	}
 
 	public Station(String name, String address, String city, String x, String y ) {
 		super();
 		this.name = name;
-		this.setAddress(address);
+		this.address = (address);
 		this.city = city;
 		this.x = x;
 		this.y =y;
-
 	}
 	
 			
@@ -73,7 +68,6 @@ public class Station {
 	public void setName(String name) {
 		this.name = name;
 	}
-
 
 
 	public String getCity() {
