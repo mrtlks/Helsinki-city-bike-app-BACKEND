@@ -54,7 +54,7 @@ public class StationController {
 //1. ASEMIEN LISTAUS-----------------	
 
 	@RequestMapping(value = "/stations")
-	public String getStations(@PageableDefault(size = 400) Pageable pageable,
+	public String getStations(@PageableDefault(size = 100) Pageable pageable,
             Model model)  {
 		Page<Station> page = stationRepository.findByOrderByIdDesc(pageable);
 
