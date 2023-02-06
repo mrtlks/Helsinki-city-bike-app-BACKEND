@@ -4,4 +4,3 @@ Java Spring Boot backend application for frontend applications which use HSL cit
 
 
 
-HSL citybike station data 
