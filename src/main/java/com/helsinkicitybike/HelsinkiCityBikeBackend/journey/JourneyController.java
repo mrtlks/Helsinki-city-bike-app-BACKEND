@@ -61,7 +61,7 @@ public class JourneyController {
 	//1. MATKOJEN LISTAUS -----------------	
 	
 	 @GetMapping("/journeys")
-	  public String getJourneys(@PageableDefault(size = 500) Pageable pageable,
+	  public String getJourneys(@PageableDefault(size = 100) Pageable pageable,
 	                             Model model) {
 	      Page<Journey> page = journeyRepository.findByOrderByIdDesc(pageable);
 
