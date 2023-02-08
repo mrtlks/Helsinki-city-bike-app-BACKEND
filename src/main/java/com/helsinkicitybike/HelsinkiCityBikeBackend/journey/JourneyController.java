@@ -60,6 +60,17 @@ public class JourneyController {
 	
 	//1. MATKOJEN LISTAUS -----------------	
 	
+	
+	@GetMapping("/")	//etusivu (sisältää nyt saman kuin "/journeys")
+	 public String startergetJourneys(@PageableDefault(size = 100) Pageable pageable,
+             Model model) {
+			Page<Journey> page = journeyRepository.findByOrderByIdDesc(pageable);			
+			model.addAttribute("page", page);
+			model.addAttribute("stations", stationRepository.findAll());
+			model.addAttribute("journey", new Journey()); // "tyhjä" olio
+			return "journeyspage";
+	}
+	
 	 @GetMapping("/journeys")
 	  public String getJourneys(@PageableDefault(size = 100) Pageable pageable,
 	                             Model model) {
